@@ -112,10 +112,7 @@ void clear(){printf("\n\n\n\n\n\n\n\n\n\n");}
 //funcion Declaration
 int market(Info *info)
 {
-    info->exp+=5;
     int money=info->money;
-
-
     char *itemmain[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                          "┃                                 CHOICE ONE!!                                 ┃\n",
                          "┃                      [ press 'x' key to back to menu!! ]                     ┃\n",
@@ -170,6 +167,7 @@ int market(Info *info)
             info->item+=3;
             info->money-=10;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
+            info->exp+=5;
             break;
         case 2:
             if(money<15){
@@ -180,6 +178,7 @@ int market(Info *info)
             info->item+=5;
             info->money-=15;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
+            info->exp+=5;
             break;
         case 3:
             if(money<20){
@@ -190,6 +189,7 @@ int market(Info *info)
             info->item+=7;
             info->money-=20;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
+            info->exp+=5;
             break;
         case 4:
             if(money<3){
@@ -200,6 +200,7 @@ int market(Info *info)
             info->item+=2;
             info->money-=3;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
+            info->exp+=5;
             break;
         case 40:
         case 72:
@@ -216,7 +217,6 @@ int market(Info *info)
 
 int food(Info *info)
 {
-    info->exp+=5;
     int money=info->money;
     char *main[100]  =  {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                          "┃                                 CHOICE ONE!!                                 ┃\n",
@@ -276,6 +276,7 @@ int food(Info *info)
             }
             info->hunger+=5;
             info->money-=5;
+            info->exp+=5;
             main_eating[21]="┃   Eating !!                                                                  ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
@@ -291,6 +292,7 @@ int food(Info *info)
             }
             info->hunger+=5;
             info->money-=5;
+            info->exp+=5;
             main_eating[21]="┃   Eating !!                                                                  ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
@@ -307,6 +309,7 @@ int food(Info *info)
             }
             info->hunger+=10;
             info->money-=10;
+            info->exp+=5;
             main_eating[21]="┃   Eating !!                                                                  ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
@@ -323,6 +326,7 @@ int food(Info *info)
             }
             info->hunger+=1;
             info->money-=1;
+            info->exp+=5;
             main_eating[21]="┃   Eating !!                                                                  ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
@@ -556,13 +560,13 @@ void savefile(Info *info, int fd_new) {        //save game, save file to directi
         switch(key-'0')
         {
             case 1:
-                sprintf(temp, "%s/%d/%d/%d",info->name, info->hunger, info->money, info->item);
+                sprintf(temp, "%s/%d/%d/%d/%d",info->name, info->exp, info->hunger, info->money, info->item);
                 write(fd_new, temp, strlen(temp));
                 for(int i=0; i<23; i++) printf("%s", main_save[i]);
                 sleep(1);
                 return;
             case 2:
-                sprintf(temp, "%s/%d/%d/%d",info->name, info->hunger, info->money, info->item);
+                sprintf(temp, "%s/%d/%d/%d/%d",info->name, info->exp, info->hunger, info->money, info->item);
                 write(fd_new, temp, strlen(temp));
                 for(int i=0; i<23; i++) printf("%s", main_savebreak[i]);
                 sleep(2);
@@ -660,7 +664,7 @@ void graduation(int fd_new){
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━┸━━━━━━━━━━━━━━━━━━━━━━━━━┸━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
 
 
-    for(int j=0; j<10; j++){
+    for(int j=0; j<3; j++){
         for(int i=0; i<23; i++)
             printf("%s", gra_1[i] );
         sleep(1);
@@ -956,6 +960,7 @@ void loadgame(Info *info){
     printf("%s", datatemp);
     sleep(2);
     info->name=strtok(datatemp, "/");
+    info->exp = atoi(strtok(NULL, "/"));
     info->hunger = atoi(strtok(NULL, "/"));
     info->money = atoi(strtok(NULL, "/"));
     info->item = atoi(strtok(NULL, "/"));
@@ -1153,8 +1158,8 @@ int cui_dama_main(){
 
 int main(){  
     Info *info;
-    cui_dama_main();
-    cui_dama_start();           //cui main!
+    // cui_dama_main();
+    // cui_dama_start();           //cui main!
     char menu_select;
     mkdir("./data", 00777);
     while(1){
@@ -1163,7 +1168,7 @@ int main(){
         scanf(" %s", &menu_select);
         if('1'<=menu_select && menu_select<='3'){
             switch (menu_select){
-                case '1':
+                case '1':   
                     newgame(info);
                     break;
                 case '2':
