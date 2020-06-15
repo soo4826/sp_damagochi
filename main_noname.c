@@ -929,14 +929,16 @@ void loadgame(Info *info){
        closedir(dir);
     }
      else { //if file loading goes wrong
-        for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
+        for(int i=0; i<
+        23; i++) printf("%s", main_nofile[i]);
         // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
-        sleep(2);
+        sleep(1);
         newgame(info);//fd open => new game cher rom dong jack
         }
 
     printf(" >> ");
     scanf("%s", username);
+    
     //loading cui
     for(int j=0; j<2; j++){
         for(int i=0; i<23; i++)
@@ -1065,7 +1067,7 @@ void cui_dama_start(){
         sleep(1);
     }
 }
-int cui_dama_main(){
+void cui_dama_main(){
         char *main[100]={       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                                 "┃                                                                              ┃\n",
                                 "┃                 __  ___      __  ___          __                             ┃\n",
