@@ -14,7 +14,7 @@ struct info{
     char* name;
     int exp;
     int hunger;
-    int time;//like day1, day2... day 10 -> finish delete needed
+    int time;//like day1, day2... day 10 -> finish
     int item;
     int money;
 };
@@ -47,6 +47,7 @@ void cui_status(Info *info){
     sprintf(hunger_out, "Hunger :[%-20s] [%3d/100]", hunger_ctemp, info->hunger);
     printf("┃%37s %40s┃\n", exp_out, hunger_out);
     printf("┃                      [MONEY : %5d Gold] | [Item : %2d]                      ┃\n", info->money, info->item);
+      
 }
 
     void cui_action(){  
@@ -73,7 +74,7 @@ void cui_status(Info *info){
                                 "┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n",
                                 "┃             CHOOSE ACTION! [1.Market  2.Hunting  3.Food  4.Save]             ┃\n",
                                 "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
-
+                                //┗━━━━━━━┛
         for(int i=0; i<19; i++)
             printf("%s", action_menu[i]);                        
     }
@@ -111,7 +112,10 @@ void clear(){printf("\n\n\n\n\n\n\n\n\n\n");}
 //funcion Declaration
 int market(Info *info)
 {
+    info->exp+=5;
     int money=info->money;
+
+
     char *itemmain[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                          "┃                                 CHOICE ONE!!                                 ┃\n",
                          "┃                      [ press 'x' key to back to menu!! ]                     ┃\n",
@@ -133,7 +137,7 @@ int market(Info *info)
                          "┃      └──┐──┌──┘              |/           └─┘                  │ │           ┃\n",
                          "┃         └──┘                 /                                 └─┘           ┃\n",
                          "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                         "┃ 1.SWORD 2.ARROW 3.GUN 4.AX                                                   ┃\n",
+                         "┃ 1.SWORD 2.ARROW 3.GUN 4.AX                              <made by team Italy> ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};       
    
    //(윗화면 그래픽1.칼 2.화살 3.총 4.도끼) wrong choice impl needed
@@ -145,8 +149,8 @@ int market(Info *info)
         main_nomoney[i]=itemmain[i];
         main_buy[i]=itemmain[i];
     }
-    main_nomoney[21]=     "┃   Not Enough money!                                                          ┃\n";
-    main_buy[21]         ="┃   Purchasing....                                                             ┃\n";
+    main_nomoney[21]=     "┃   Not Enough money!                                     <made by team Italy> ┃\n";
+    main_buy[21]         ="┃   Purchasing....                                        <made by team Italy> ┃\n";
     char item;  
     // char* item_arr[4] = {"SWORD", "ARROW", "GUN", "AX"};
     printf(">> ");
@@ -154,7 +158,7 @@ int market(Info *info)
     // strcat(main_buy[21], "Got a ");
     // sprintf(buy_temp, "%5s", item_arr[item-'0'-1]);
     // strcat(main_buy[21], buy_temp);
-    // strcat(main_buy[21], "                                          ┃\n");
+    // strcat(main_buy[21], "                     <made by team Italy> ┃\n");
     switch(item-'0')
     {
         case 1:
@@ -166,7 +170,6 @@ int market(Info *info)
             info->item+=3;
             info->money-=10;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
-            info->exp+=5;
             break;
         case 2:
             if(money<15){
@@ -177,7 +180,6 @@ int market(Info *info)
             info->item+=5;
             info->money-=15;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
-            info->exp+=5;
             break;
         case 3:
             if(money<20){
@@ -188,7 +190,6 @@ int market(Info *info)
             info->item+=7;
             info->money-=20;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
-            info->exp+=5;
             break;
         case 4:
             if(money<3){
@@ -199,7 +200,6 @@ int market(Info *info)
             info->item+=2;
             info->money-=3;
             for(int i=0; i<23; i++) printf("%s", main_buy[i]);
-            info->exp+=5;
             break;
         case 40:
         case 72:
@@ -216,6 +216,7 @@ int market(Info *info)
 
 int food(Info *info)
 {
+    info->exp+=5;
     int money=info->money;
     char *main[100]  =  {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                          "┃                                 CHOICE ONE!!                                 ┃\n",
@@ -238,7 +239,7 @@ int food(Info *info)
                          "┃  ┃   (-$5, +5)    ┃   │   (-$5, +5)   │       (-$10,+10)       ╰──────────╯  ┃\n",
                          "┃  ┗━━━━━━━━━━━━━━━━┛   ╰───────────────╯        F I S H            F E E D    ┃\n",
                          "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                         "┃ 1.TUNA 2.SPAM 3.Fish 4.Feed                                                  ┃\n",
+                         "┃ 1.TUNA 2.SPAM 3.Fish 4.Feed                             <made by team Italy> ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};       
     char* main_money[100];
     char* main_eating[100];
@@ -251,8 +252,8 @@ int food(Info *info)
     }
 
     char *food_list[4]={"TUNA", "SPAM", "FISH", "FEED"};
-    main_money[21]=     "┃   Not Enough money!                                                          ┃\n";
-    main_full[21]=      "┃   Can't eat! I'm full!!                                                      ┃\n";
+    main_money[21]=     "┃   Not Enough money!                                     <made by team Italy> ┃\n";
+    main_full[21]=      "┃   Can't eat! I'm full!!                                 <made by team Italy> ┃\n";
    //(윗화면 그래픽 1.튜나 2. 스팸 3.라면 4. 사료)
    char key;
 //    printf("1.TUNA(-$5,+5) 2.SPAM(-$5,+5) 3.Spaghetti(-$10,+10) 4.Feed(-$1,+1)\n\n");
@@ -275,8 +276,7 @@ int food(Info *info)
             }
             info->hunger+=5;
             info->money-=5;
-            info->exp+=5;
-            main_eating[21]="┃   Eating !!                                                                  ┃\n";
+            main_eating[21]="┃   Eating !!                                             <made by team Italy> ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
         case 2:
@@ -291,8 +291,7 @@ int food(Info *info)
             }
             info->hunger+=5;
             info->money-=5;
-            info->exp+=5;
-            main_eating[21]="┃   Eating !!                                                                  ┃\n";
+            main_eating[21]="┃   Eating !!                                             <made by team Italy> ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
             break;
@@ -308,8 +307,7 @@ int food(Info *info)
             }
             info->hunger+=10;
             info->money-=10;
-            info->exp+=5;
-            main_eating[21]="┃   Eating !!                                                                  ┃\n";
+            main_eating[21]="┃   Eating !!                                             <made by team Italy> ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
             break;
@@ -325,8 +323,7 @@ int food(Info *info)
             }
             info->hunger+=1;
             info->money-=1;
-            info->exp+=5;
-            main_eating[21]="┃   Eating !!                                                                  ┃\n";
+            main_eating[21]="┃   Eating !!                                             <made by team Italy> ┃\n";
             for(int i=0; i<23; i++) printf("%s", main_eating[i]);
             break;
             break;
@@ -374,7 +371,7 @@ int hunting(Info *info){
                               "┃                                                                              ┃\n",
                               "┃                                                                              ┃\n",
                               "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                              "┃                                                                              ┃\n",
+                              "┃                                                         <made by team Italy> ┃\n",
                               "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
                                
    char *hunt_2   [100]  =   {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
@@ -398,7 +395,7 @@ int hunting(Info *info){
                               "┃                                                                              ┃\n",
                               "┃                                                                              ┃\n",
                               "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                              "┃                                                                              ┃\n",
+                              "┃                                                         <made by team Italy> ┃\n",
                               "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};        
        char *hunt_3[100]  =  {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                               "┃                                                                              ┃\n",
@@ -421,7 +418,7 @@ int hunting(Info *info){
                               "┃                                                                              ┃\n",
                               "┃                                                                              ┃\n",
                               "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                              "┃                                                                              ┃\n",
+                              "┃                                                         <made by team Italy> ┃\n",
                               "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
                                                                                   
     // char * dama_nomal[20]
@@ -537,7 +534,7 @@ void savefile(Info *info, int fd_new) {        //save game, save file to directi
                         "┃                          ┃                          ┃                        ┃\n",
                         "┃                          ┃                          ┃                        ┃\n",
                         "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                        "┃  Type number!                                                                ┃\n",
+                        "┃  Type number!                                           <made by team Italy> ┃\n",
                         "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
     for(int i=0; i<23; i++) printf("%s", main[i]);
     char* main_save[100];
@@ -549,9 +546,9 @@ void savefile(Info *info, int fd_new) {        //save game, save file to directi
         main_wrongchoice[i]=main[i];
     }
 
-    main_save[21]         ="┃  File Saving..                                                               ┃\n";
-    main_savebreak[21]    ="┃  File Saving and quit!                                                       ┃\n";
-    main_wrongchoice[21]  ="┃  Wrong choice!    Type number!                                               ┃\n";
+    main_save[21]         ="┃  File Saving..                                          <made by team Italy> ┃\n";
+    main_savebreak[21]    ="┃  File Saving and quit!                                  <made by team Italy> ┃\n";
+    main_wrongchoice[21]  ="┃  Wrong choice!    Type number!                          <made by team Italy> ┃\n";
     char temp[50];
     while (1){
         printf(">> ");
@@ -559,15 +556,13 @@ void savefile(Info *info, int fd_new) {        //save game, save file to directi
         switch(key-'0')
         {
             case 1:
-                sprintf(temp, "%s/%d/%d/%d/%d",info->name, info->exp, info->hunger, info->money, info->item);
-                lseek(fd_new, 0, SEEK_SET); //write data head of the file!!!!
+                sprintf(temp, "%s/%d/%d/%d",info->name, info->hunger, info->money, info->item);
                 write(fd_new, temp, strlen(temp));
                 for(int i=0; i<23; i++) printf("%s", main_save[i]);
                 sleep(1);
                 return;
             case 2:
-                sprintf(temp, "%s/%d/%d/%d/%d/",info->name, info->exp, info->hunger, info->money, info->item);
-                lseek(fd_new, 0, SEEK_SET); //write data head of the file!!!!
+                sprintf(temp, "%s/%d/%d/%d",info->name, info->hunger, info->money, info->item);
                 write(fd_new, temp, strlen(temp));
                 for(int i=0; i<23; i++) printf("%s", main_savebreak[i]);
                 sleep(2);
@@ -638,7 +633,7 @@ void graduation(int fd_new){
                          "┃                         ┏━━━━┸━━━━━━━━━━━━━━━━┸━━━┓   ┗━┛                    ┃\n",
                          "┃                    ┃    ┃                         ┃                          ┃\n",
                          "┃                    ┗━━━━┃       ■          ■      ┃━━━━┓                     ┃\n",
-                         "┃                         ┃           ┗━━┛          ┃    ┃                     ┃\n",
+                         "┃                         ┃           ┗━━┛          ┃    ┃<made by team Italy> ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━┸━━━━━━━━━━━━━━━━━━━━━━━━━┸━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
     char *gra_2[100]  = {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                          "┃                                                                              ┃\n",
@@ -661,11 +656,11 @@ void graduation(int fd_new){
                          "┃                         ┏━━━━┸━━━━━━━━━━━━━━━━┸━━━┓   ┗━┛                    ┃\n",
                          "┃                         ┃                         ┃    ┃                     ┃\n",
                          "┃                    ┏━━━━┃       ■   ┏━━┓   ■      ┃━━━━┛                     ┃\n",
-                         "┃                    ┃    ┃           ┗━━┛          ┃                          ┃\n",
+                         "┃                    ┃    ┃           ┗━━┛          ┃     <made by team Italy> ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━┸━━━━━━━━━━━━━━━━━━━━━━━━━┸━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
 
 
-    for(int j=0; j<3; j++){
+    for(int j=0; j<10; j++){
         for(int i=0; i<23; i++)
             printf("%s", gra_1[i] );
         sleep(1);
@@ -700,7 +695,7 @@ void starving(int fd_new){
                             "┃                        ┃     ┃       ┃       \\/        ┃                     ┃\n",
                             "┃                        ┃     ┗━━━━━━━┛       /\\        ┃                     ┃\n",
                             "┃                        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛                     ┃\n",
-                            "┃                                                                              ┃\n",
+                            "┃                                                         <made by team Italy> ┃\n",
                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"
                             }; 
 
@@ -759,143 +754,37 @@ int gamemain(Info *info, int fd_new){
     return 0;
 }
 
-
 int newgame(Info *info){//new game, call gamemain
     int fd_new=0;
     char savefile_path[50] = "./data/";
     char savefile_name[10];
     char damagochi_name[10];                 //character name
-    char* main_1[100]={      "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                  NEW GAME!!!                                 ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃                                                                ☆             ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┃          ☆                                                                   ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                  ┏━━━━━━━━━━┓         ☆                      ┃\n",
-                             "┃                              O   ┃  ■    ■  ┃                                ┃\n",
-                             "┃                              ┃   ┃          ┃                                ┃\n",
-                             "┃                              ┗━━━┫// ┗━━┛ //┃                                ┃\n",
-                             "┃                      ☆           ┃          ┃                                ┃\n",
-                             "┃                                  ┗━━━━━━━━━━┛                                ┃\n",
-                             "┃                                                                 ☆            ┃\n",
-                             "┃    ☆                                HELLO?                                   ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                   ☆                                  ☆       ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃  INPUT USERNAME                                                              ┃\n",
-                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
-
-    char* main_2[100]={      "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                  NEW GAME!!!                                 ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃                ☆                                                             ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┃                           ☆                                      ☆           ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                  ┏━━━━━━━━━━┓                                ┃\n",
-                             "┃    ☆                             ┃  >    <  ┃                                ┃\n",
-                             "┃                                  ┃          ┃            ☆                   ┃\n",
-                             "┃                                  ┃// ┗━━┛ //┃                        ☆       ┃\n",
-                             "┃                                  ┃          ┃                                ┃\n",
-                             "┃                                  ┗━━━━━━━━━━┛                                ┃\n",
-                             "┃                          ☆                                                   ┃\n",
-                             "┃                               NICE TO MEET YOU!                              ┃\n",
-                             "┃              ☆                                               ☆               ┃\n",
-                             "┃                                   ☆                                          ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃  INPUT DAMAGOCH NAME                                                         ┃\n",
-                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
-     char* main_3[100]={     "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                  NEW GAME!!!                                 ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃                               ☆                                              ┃\n",
-                             "┃                                                            ☆                 ┃\n",
-                             "┃       ☆                                                                      ┃\n",
-                             "┃                                                                        ☆     ┃\n",
-                             "┃                                  ┏━━━━━━━━━━┓                                ┃\n",
-                             "┃                              O   ┃  ■    ■  ┃  O                             ┃\n",
-                             "┃                              ┃   ┃   ┏━━┓   ┃  ┃                             ┃\n",
-                             "┃                   ☆          ┗━━━┫// ┗━━┛ //┣━━┛                             ┃\n",
-                             "┃                                  ┃          ┃                                ┃\n",
-                             "┃                                  ┗━━━━━━━━━━┛                   ☆            ┃\n",
-                             "┃    ☆                                                                         ┃\n",
-                             "┃                                ENJOY YOUR GAME!!                             ┃\n",
-                             "┃                                                                              ┃\n",
-                             "┃                                                      ☆                       ┃\n",
-                             "┃                      ☆                                                       ┃\n",
-                             "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃  GAME START!!                                                                ┃\n",
-                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
-
     clear();    
     // printf("new game test!!!!!!!!!!");
     printf("\n");
-    for(int i=0; i<23; i++) 
-        printf("%s", main_1[i]); 
-    printf(">> ");
+    
+    printf("Type username >>  ");
     scanf("%s", savefile_name);
     strncat(savefile_path, savefile_name, strlen(savefile_name));    //strncat()?
     strcat(savefile_path, ".txt");
     // printf("%s\n", savefile_path);
     // sleep(2);
-    for(int i=0; i<23; i++) 
-        printf("%s", main_2[i]); 
-    printf(">> ");
+    printf("Type your DAMAGOCHI NAME(under 10 character) >>  ");
     scanf("%s", damagochi_name);
     info->name=damagochi_name;
     // printf("%s\n", info->name);
     // sleep(2);               //debug
-    for(int i=0; i<23; i++)
-        printf("%s", main_3[i]);
-    sleep(3);
     clear_status(info);
     
     fd_new=open(savefile_path, O_RDWR | O_CREAT, 00777);
     gamemain(info, fd_new);
     
-
 }
-
-// int newgame(Info *info){//new game, call gamemain
-//     int fd_new=0;
-//     char savefile_path[50] = "./data/";
-//     char savefile_name[10];
-//     char damagochi_name[10];                 //character name
-//     clear();    
-//     // printf("new game test!!!!!!!!!!");
-//     printf("\n");
-    
-//     printf("Type username >>  ");
-//     scanf("%s", savefile_name);
-//     strncat(savefile_path, savefile_name, strlen(savefile_name));    //strncat()?
-//     strcat(savefile_path, ".txt");
-//     // printf("%s\n", savefile_path);
-//     // sleep(2);
-//     printf("Type your DAMAGOCHI NAME(under 10 character) >>  ");
-//     scanf("%s", damagochi_name);
-//     info->name=damagochi_name;
-//     // printf("%s\n", info->name);
-//     // sleep(2);               //debug
-//     clear_status(info);
-    
-//     fd_new=open(savefile_path, O_RDWR | O_CREAT, 00777);
-//     gamemain(info, fd_new);
-    
-// }
 
 
 
 void loadgame(Info *info){
-    int cnt = 0;
+    int cnt = 12;
 
     DIR *dir;
     struct dirent *dir_file;
@@ -922,8 +811,9 @@ void loadgame(Info *info){
                         //  "┃                                                                              ┃\n",1
                         //  "┃                                                                              ┃\n",2
                         //  "┃                                                                              ┃\n",3
-    char* main_bottom[100]={"┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                            "┃ Type your username!                                                          ┃\n",
+    char* main_bottom[100]={"┃                                                                              ┃\n",
+                            "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
+                            "┃ Type your username!                                     <made by team Italy> ┃\n",
                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};      
     char* main_nofile[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                              "┃                                                                              ┃\n",
@@ -946,7 +836,7 @@ void loadgame(Info *info){
                              "┃                                                                              ┃\n",
                              "┃                                                                              ┃\n",
                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃  please wait..                                                               ┃\n",
+                             "┃  please wait..                                          <made by team Italy> ┃\n",
                              "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
 
     char* main_loading_1[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
@@ -970,7 +860,7 @@ void loadgame(Info *info){
                              "┃                                                                              ┃\n",
                              "┃                                                                              ┃\n",
                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃  please wait..                                                               ┃\n",
+                             "┃  please wait..                                          <made by team Italy> ┃\n",
                              "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
     char* main_loading_2[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                              "┃                                                                              ┃\n",
@@ -993,7 +883,7 @@ void loadgame(Info *info){
                              "┃                                                                              ┃\n",
                              "┃                                                                              ┃\n",
                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                             "┃  please wait..                                                               ┃\n",
+                             "┃  please wait..                                          <made by team Italy> ┃\n",
                              "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};                             
      char* main_loading_3[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                                 "┃                                                                              ┃\n",
@@ -1016,42 +906,33 @@ void loadgame(Info *info){
                                 "┃                                                                              ┃\n",
                                 "┃                                                                              ┃\n",
                                 "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                                "┃  please wait..                                                               ┃\n",
+                                "┃  please wait..                                          <made by team Italy> ┃\n",
                                 "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};                           
-    char time_temp[100] = "\0";
+
     dir = opendir("./data");
     if(NULL != dir)
     {
-       for(int i=0; i<6; i++) printf("%s", main_top[i]);//can load only 14 files
+       for(int i=0; i<6; i++) printf("%s", main_top[i]);
        while(dir_file=readdir(dir))
        {
-            
-            filename = dir_file->d_name; 
-            if(strlen(filename)<=2) continue;   //do not display home, parent directory
-            stat(filename,&statbuf);
-            
-            char timetemp[25]="\0";//time im si save
-            strncat(timetemp, ctime(&statbuf.st_mtime), 24);    //24BYTE ONLY
-            printf("┃              %-16s  │       %-24s              ┃\n", filename, timetemp);
-            if(cnt++ == 14) {
-                printf("┃            Too many save files! please remove your old save file!            ┃\n");
-                break;
-            }
+          filename = dir_file->d_name;    
+          stat(filename,&statbuf);   
+          printf("┃    %-10s     >>  %-20s    ┃", filename, ctime(&statbuf.st_mtime));
+          cnt--;
        }
-       for(int i=0; i<14-cnt; i++) printf("┃                                                                              ┃\n");
-       for(int i=0; i<3; i++) printf("%s", main_bottom[i]);
+       for(int i=0; i<cnt; i++) printf("┃                                                                              ┃\n");
+       for(int i=0; i<4; i++) printf("%s", main_bottom[i]);
        closedir(dir);
     }
      else { //if file loading goes wrong
         for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
         // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
-        sleep(1);
+        sleep(2);
         newgame(info);//fd open => new game cher rom dong jack
         }
 
     printf(" >> ");
     scanf("%s", username);
-    
     //loading cui
     for(int j=0; j<2; j++){
         for(int i=0; i<23; i++)
@@ -1064,31 +945,17 @@ void loadgame(Info *info){
             printf("%s", main_loading_3[i]);
         sleep(1);
     }
-    
+
     char loadfile_path[50] = "./data/";
     strcat(loadfile_path, username);
     strcat(loadfile_path, ".txt");
-    int fd_load;
-    fd_load = open(loadfile_path, O_RDWR);
-    if (fd_load == -1){
-        for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
-        // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
-        sleep(1);
-        newgame(info);//fd open => new game cher rom dong jack
-    }
+    int fd_load = open(loadfile_path, O_RDWR);
    // strtokenizing
     char datatemp[50];
     read(fd_load, &datatemp , sizeof(datatemp));
-    if(datatemp==NULL || strlen(datatemp)<10 || strlen(datatemp)>25){//datatemp error, empty or too long or too short!
-        for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
-        // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
-        sleep(1);
-        newgame(info);//fd open => new game cher rom dong jack
-    }
     printf("%s", datatemp);
     sleep(2);
     info->name=strtok(datatemp, "/");
-    info->exp = atoi(strtok(NULL, "/"));
     info->hunger = atoi(strtok(NULL, "/"));
     info->money = atoi(strtok(NULL, "/"));
     info->item = atoi(strtok(NULL, "/"));
@@ -1123,7 +990,7 @@ void loadgame(Info *info){
     //                      "┃                                                                              ┃\n",
     //                      "┃                                                                              ┃\n",
     //                      "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-    //                      "┃                                                                              ┃\n",
+    //                      "┃                                                         <made by team Italy> ┃\n",
     //                      "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};       
 
 
@@ -1149,7 +1016,7 @@ void cui_dama_start(){
                          "┃                                                                              ┃\n",
                          "┃                                                                              ┃\n",
                          "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                         "┃                                                                              ┃\n",
+                         "┃                                                         <made by team Italy> ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
 
     char *main_r[100] = {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
@@ -1173,15 +1040,15 @@ void cui_dama_start(){
                          "┃                                                                              ┃\n",
                          "┃                                                                              ┃\n",
                          "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                         "┃                                                                              ┃\n",
+                         "┃                                                         <made by team Italy> ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};                         
-    // char * dama_nomal[20]
-    //                     ={
-    //                       "┏━━━━━━━┓\n",
-    //                       "┃  ■ ■  ┃\n",                           
-    //                       "┃  ┌─┐  ┃\n",
-    //                       "┃  └─┘  ┃\n",                        
-    //                       "┗━━━━━━━┛\n"};
+    char * dama_nomal[20]
+                        ={
+                          "┏━━━━━━━┓\n",
+                          "┃  ■ ■  ┃\n",                           
+                          "┃  ┌─┐  ┃\n",
+                          "┃  └─┘  ┃\n",                        
+                          "┗━━━━━━━┛\n"};
 
     //printf  ("┏━━━━━━━━┓\n┃        ┃\n┃  ■  ■  ┃\n┃  ┌──┐  ┃\n┃  └──┘  ┃\n┗━━━━━━━━┛\n");
     for(int j=0; j<2; j++){
@@ -1193,7 +1060,7 @@ void cui_dama_start(){
         sleep(1);
     }
 }
-void cui_dama_main(){
+int cui_dama_main(){
         char *main[100]={       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                                 "┃                                                                              ┃\n",
                                 "┃                 __  ___      __  ___          __                             ┃\n",
@@ -1215,7 +1082,7 @@ void cui_dama_main(){
                                 "┃             /_____/_/\\__,_/_/   \\__, /                                       ┃\n",
                                 "┃                                /____/                                        ┃\n"
                                 "┃                                                                              ┃\n",
-                                "┃                                                                              ┃\n",
+                                "┃                                                         <made by team Italy> ┃\n",
                                 "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"
                                 };
 
@@ -1224,7 +1091,7 @@ void cui_dama_main(){
                         //  "┃                                                                              ┃\n",
                         //  "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
                         //  "┃                                                                              ┃\n",
-                        //  "┃                                                                              ┃\n",
+                        //  "┃                                                         <made by team Italy> ┃\n",
                         //  "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
                         //  1. NEW GAME
 
@@ -1256,7 +1123,7 @@ void cui_dama_main(){
                           "┃                                                                              ┃\n",
                           "┃                                                                              ┃\n",
                           "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                          "┃ SELECT MENU!                                                                 ┃\n",
+                          "┃ SELECT MENU!                                            <made by team Italy> ┃\n",
                           "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};       
         for(int i=0; i<23; i++)
             printf("%s", main_menu[i] );
@@ -1296,7 +1163,7 @@ int main(){
         scanf(" %s", &menu_select);
         if('1'<=menu_select && menu_select<='3'){
             switch (menu_select){
-                case '1':   
+                case '1':
                     newgame(info);
                     break;
                 case '2':
