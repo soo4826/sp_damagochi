@@ -377,7 +377,7 @@ int hunting(Info *info){
                               "┃                                                                              ┃\n",
                               "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"}; 
                                
-   char *hunt_2   [100]  =   {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
+    char *hunt_2   [100]  =   {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                               "┃                                                                              ┃\n",
                               "┃                                   Hunting...                                 ┃\n",
                               "┃                                                                              ┃\n",
@@ -400,7 +400,7 @@ int hunting(Info *info){
                               "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
                               "┃                                                                              ┃\n",
                               "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};        
-       char *hunt_3[100]  =  {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
+    char *hunt_3[100]  =  {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
                               "┃                                                                              ┃\n",
                               "┃                                   Hunting.                                   ┃\n",
                               "┃                                                                              ┃\n",
@@ -437,14 +437,11 @@ int hunting(Info *info){
        printf(" Go get some food ... \n");
        printf(" \" %s \" is starving ... \n",info->name);
        printf(" Back to menu without hunting ... \n");
-       //printf(" Back to menu? (N/Y) ");
-       //scanf("%s",&back);
-       //if(back == 'N')
        sleep(5);
        return 0;
     }
 
-    for(int j=0; j<3; j++){
+    for(int j=0; j<2; j++){
         for(int i=0; i<23; i++)
             printf("%s", hunt_1[i] );
         sleep(1);
@@ -731,19 +728,19 @@ int gamemain(Info *info, int fd_new){
         int tid;     //thread pid
         clear();
         if(select == 1){//error detection hal geot
-            food(info);
+            chk=market(info);
             if(chk == -1){
                 return -1;
                 //error occured!!! return -1
             }
         }
         else if(select == 2){
-            hunting(info);
+            chk=hunting(info);
             if(chk == -1) return -1;
             
         }
         else if(select == 3){
-            market(info);
+            chk=food(info);
             if(chk== -1) return -1;
         }
         else if(select == 4){
@@ -836,9 +833,6 @@ int newgame(Info *info){//new game, call gamemain
                              "┃  GAME START!!                                                                ┃\n",
                              "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
 
-    clear();    
-    // printf("new game test!!!!!!!!!!");
-    printf("\n");
     for(int i=0; i<23; i++) 
         printf("%s", main_1[i]); 
     printf(">> ");
@@ -1023,22 +1017,23 @@ void loadgame(Info *info){
     if(NULL != dir)
     {
        for(int i=0; i<6; i++) printf("%s", main_top[i]);//can load only 14 files
+       printf("┃            < User Name >                  <Last Access Time>                 ┃\n");
        while(dir_file=readdir(dir))
        {
             
             filename = dir_file->d_name; 
-            if(strlen(filename)<=2) continue;   //do not display home, parent directory
             stat(filename,&statbuf);
-            
-            char timetemp[25]="\0";//time im si save
+            char timetemp[25]="\0";//time init \0
+            if(strlen(filename)<=2) continue;
             strncat(timetemp, ctime(&statbuf.st_mtime), 24);    //24BYTE ONLY
+            // printf("%s\n", timetemp);
             printf("┃              %-16s  │       %-24s              ┃\n", filename, timetemp);
-            if(cnt++ == 14) {
+            if(cnt++ == 13) {
                 printf("┃            Too many save files! please remove your old save file!            ┃\n");
                 break;
             }
        }
-       for(int i=0; i<14-cnt; i++) printf("┃                                                                              ┃\n");
+       for(int i=0; i<13-cnt; i++) printf("┃                                                                              ┃\n");
        for(int i=0; i<3; i++) printf("%s", main_bottom[i]);
        closedir(dir);
     }
@@ -1049,7 +1044,7 @@ void loadgame(Info *info){
         newgame(info);//fd open => new game cher rom dong jack
         }
 
-    printf(" >> ");
+    printf(">> ");
     scanf("%s", username);
     
     //loading cui
@@ -1079,7 +1074,7 @@ void loadgame(Info *info){
    // strtokenizing
     char datatemp[50];
     read(fd_load, &datatemp , sizeof(datatemp));
-    if(datatemp==NULL || strlen(datatemp)<10 || strlen(datatemp)>25){//datatemp error, empty or too long or too short!
+    if(datatemp[0]=='\0'){//datatemp error, empty or too long or too short!
         for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
         // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
         sleep(1);
