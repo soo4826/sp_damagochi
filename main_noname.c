@@ -561,12 +561,14 @@ void savefile(Info *info, int fd_new) {        //save game, save file to directi
         {
             case 1:
                 sprintf(temp, "%s/%d/%d/%d/%d",info->name, info->exp, info->hunger, info->money, info->item);
+                lseek(fd_new, 0, SEEK_SET); //write data head of the file!!!!
                 write(fd_new, temp, strlen(temp));
                 for(int i=0; i<23; i++) printf("%s", main_save[i]);
                 sleep(1);
                 return;
             case 2:
-                sprintf(temp, "%s/%d/%d/%d/%d",info->name, info->exp, info->hunger, info->money, info->item);
+                sprintf(temp, "%s/%d/%d/%d/%d/",info->name, info->exp, info->hunger, info->money, info->item);
+                lseek(fd_new, 0, SEEK_SET); //write data head of the file!!!!
                 write(fd_new, temp, strlen(temp));
                 for(int i=0; i<23; i++) printf("%s", main_savebreak[i]);
                 sleep(2);
@@ -788,7 +790,7 @@ int newgame(Info *info){//new game, call gamemain
 
 
 void loadgame(Info *info){
-    int cnt = 12;
+    int cnt = 0;
 
     DIR *dir;
     struct dirent *dir_file;
@@ -815,8 +817,7 @@ void loadgame(Info *info){
                         //  "┃                                                                              ┃\n",1
                         //  "┃                                                                              ┃\n",2
                         //  "┃                                                                              ┃\n",3
-    char* main_bottom[100]={"┃                                                                              ┃\n",
-                            "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
+    char* main_bottom[100]={"┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
                             "┃ Type your username!                                                          ┃\n",
                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};      
     char* main_nofile[100]={"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
@@ -916,20 +917,24 @@ void loadgame(Info *info){
     dir = opendir("./data");
     if(NULL != dir)
     {
-       for(int i=0; i<6; i++) printf("%s", main_top[i]);
+       for(int i=0; i<6; i++) printf("%s", main_top[i]);//can load only 14 files
        while(dir_file=readdir(dir))
        {
+            
             filename = dir_file->d_name; 
             if(strlen(filename)<=2) continue;   //do not display home, parent directory
             stat(filename,&statbuf);
             
-            char timetemp[25]="\0";
+            char timetemp[25]="\0";//time im si save
             strncat(timetemp, ctime(&statbuf.st_mtime), 24);    //24BYTE ONLY
-            printf("┃             %-16s  │       %-24s               ┃\n", filename, timetemp);
-            cnt--;
+            printf("┃              %-16s  │       %-24s              ┃\n", filename, timetemp);
+            if(cnt++ == 14) {
+                printf("┃            Too many save files! please remove your old save file!            ┃\n");
+                break;
+            }
        }
-       for(int i=0; i<cnt; i++) printf("┃                                                                              ┃\n");
-       for(int i=0; i<4; i++) printf("%s", main_bottom[i]);
+       for(int i=0; i<14-cnt; i++) printf("┃                                                                              ┃\n");
+       for(int i=0; i<3; i++) printf("%s", main_bottom[i]);
        closedir(dir);
     }
      else { //if file loading goes wrong
@@ -954,7 +959,7 @@ void loadgame(Info *info){
             printf("%s", main_loading_3[i]);
         sleep(1);
     }
-
+    
     char loadfile_path[50] = "./data/";
     strcat(loadfile_path, username);
     strcat(loadfile_path, ".txt");
@@ -962,6 +967,12 @@ void loadgame(Info *info){
    // strtokenizing
     char datatemp[50];
     read(fd_load, &datatemp , sizeof(datatemp));
+    if(datatemp==NULL || strlen(datatemp)<10 || strlen(datatemp)>25){//datatemp error, empty or too long or too short!
+        for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
+        // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
+        sleep(1);
+        newgame(info);//fd open => new game cher rom dong jack
+    }
     printf("%s", datatemp);
     sleep(2);
     info->name=strtok(datatemp, "/");
