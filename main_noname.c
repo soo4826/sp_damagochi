@@ -912,25 +912,28 @@ void loadgame(Info *info){
                                 "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
                                 "┃  please wait..                                                               ┃\n",
                                 "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};                           
-
+    char time_temp[100] = "\0";
     dir = opendir("./data");
     if(NULL != dir)
     {
        for(int i=0; i<6; i++) printf("%s", main_top[i]);
        while(dir_file=readdir(dir))
        {
-          filename = dir_file->d_name;    
-          stat(filename,&statbuf);   
-          printf("┃    %-10s     >>  %-20s    ┃", filename, ctime(&statbuf.st_mtime));
-          cnt--;
+            filename = dir_file->d_name; 
+            if(strlen(filename)<=2) continue;   //do not display home, parent directory
+            stat(filename,&statbuf);
+            
+            char timetemp[25]="\0";
+            strncat(timetemp, ctime(&statbuf.st_mtime), 24);    //24BYTE ONLY
+            printf("┃             %-16s  │       %-24s               ┃\n", filename, timetemp);
+            cnt--;
        }
        for(int i=0; i<cnt; i++) printf("┃                                                                              ┃\n");
        for(int i=0; i<4; i++) printf("%s", main_bottom[i]);
        closedir(dir);
     }
      else { //if file loading goes wrong
-        for(int i=0; i<
-        23; i++) printf("%s", main_nofile[i]);
+        for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
         // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
         sleep(1);
         newgame(info);//fd open => new game cher rom dong jack
