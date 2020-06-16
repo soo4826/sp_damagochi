@@ -6,6 +6,7 @@
 #include <dirent.h>
 #include <time.h>
 #include <sys/stat.h>
+#include <pthread.h>
 
 // #include <pthread.h>
 
@@ -432,14 +433,39 @@ int hunting(Info *info){
     //                       "┃  └─┘  ┃\n",                        
     //                       "┗━━━━━━━┛\n"};
 
-    if(hunger<10){
-       printf(" Too hungry to hunt ... \n");
-       printf(" Go get some food ... \n");
-       printf(" \" %s \" is starving ... \n",info->name);
-       printf(" Back to menu without hunting ... \n");
-       sleep(5);
+    if(hunger<31){
+                       printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+                       printf("┃                                                                              ┃\n");
+                       printf("┃                       !! %-10s is starving !!                           ┃\n", info->name );
+        char *hunt_starving[100]  =  {
+                              "┃                                                                              ┃\n",
+                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
+                              "┃                                                                              ┃\n",
+                              "┃                                                                              ┃\n",
+                              "┃                                  ┌────────────────────────────────────────┐  ┃\n",
+                              "┃                                  │                                        │  ┃\n",
+                              "┃                                  │   I AM TOO HUNGRY TO HUNT! PLEASE EAT! │  ┃\n",
+                              "┃                                  /                                        │  ┃\n",
+                              "┃                 ┌───────┐       /─────────────────────────────────────────┘  ┃\n",
+                              "┃              \\  │ >< >< │  /                                                 ┃\n",
+                              "┃               \\ │       │ /                                                  ┃\n",
+                              "┃                \\│   ∏   │/                                                   ┃\n",
+                              "┃                 │       │                                                    ┃\n",
+                              "┃                 └───────┘                                                    ┃\n",
+                              "┃                   │   │                                                      ┃\n",
+                              "┃                   ┻   ┻                                                      ┃\n",
+                              "┃                                                                              ┃\n",
+                              "┃                                                                              ┃\n",
+                              "┃                                                                              ┃\n",
+                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
+                              "┃                                                                              ┃\n",
+                              "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
+        for(int i=0; i<20; i++) printf("%s", hunt_starving[i]);     
+        sleep(3);
+       
+
        return 0;
-    }
+    }//minju impl~
 
     for(int j=0; j<2; j++){
         for(int i=0; i<23; i++)
@@ -453,13 +479,13 @@ int hunting(Info *info){
         sleep(1);
     }
 
-    hunger=hunger-10;
+    hunger=hunger-30;
     //hunger =- 91; //to check code when hungry<10
     info->hunger = hunger;
     // printf("hunger : %d", hunger);
 
     info->money = money+(item*5);
-    info->exp = exp+(item*5);
+    info->exp = exp+(item*2);
     //info->money = money;
     return 0;
 }
@@ -670,6 +696,9 @@ void graduation(int fd_new){
             printf("%s", gra_2[i]);
         sleep(1);
     }
+    lseek(fd_new, 0, SEEK_SET);
+    write(fd_new," ", sizeof(" "));      
+    close(fd_new);
     close(fd_new);
     exit(0);
 }
@@ -687,7 +716,6 @@ void starving(int fd_new){
                             "┃                                                                              ┃\n",
                             "┃                                                                              ┃\n",
                             "┃                                                                              ┃\n",
-                            "┃                                                                              ┃\n",
                             "┃                        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓                     ┃\n",
                             "┃                        ┃                               ┃                     ┃\n",
                             "┃                        ┃                               ┃                     ┃\n",
@@ -701,9 +729,15 @@ void starving(int fd_new){
                             "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"
                             }; 
 
-            for(int i=0; i<24; i++)
-                printf("%s", gra[i] );
-            sleep(3);
+    for(int i=0; i<23; i++)
+        printf("%s", gra[i] );
+    sleep(3);
+    // pthread_t thread_t;
+    // char lseek_arg = "\0";
+    // sprintf(lseek_arg, "%s")
+    // pthread_create(thread_t, NULL, lseek, {"fd_new", "0", "SEEK_SET"});
+    lseek(fd_new, 0, SEEK_SET);
+    write(fd_new," ", sizeof(" "));             
     close(fd_new);
     exit(0);
 }
@@ -1074,7 +1108,7 @@ void loadgame(Info *info){
    // strtokenizing
     char datatemp[50];
     read(fd_load, &datatemp , sizeof(datatemp));
-    if(datatemp[0]=='\0'){//datatemp error, empty or too long or too short!
+    if(datatemp[0]=='\0'||datatemp[0]==' '){//datatemp error, empty or too long or too short!
         for(int i=0; i<23; i++) printf("%s", main_nofile[i]);
         // printf("  CANNOT LOAD PREVIOUS FILES.\n   START A NEW GAME !\n");
         sleep(1);
