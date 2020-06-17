@@ -6,7 +6,6 @@
 #include <dirent.h>
 #include <time.h>
 #include <sys/stat.h>
-#include <pthread.h>
 
 // #include <pthread.h>
 
@@ -102,7 +101,6 @@ void cui_status(Info *info){
 
 int clear_status(Info *info){
     info->exp=0;
-    info->time=0;
     info->item=1;
     info->hunger=100;
     info->money=10;
@@ -1309,8 +1307,8 @@ void cui_dama_main(){
 
 int main(){  
     Info *info;
-    // cui_dama_main();
-    // cui_dama_start();           //cui main!
+    cui_dama_main();
+    cui_dama_start();           //cui main!
     char menu_select;
     mkdir("./data", 00777);
     while(1){
@@ -1338,4 +1336,4 @@ int main(){
         }
     }
     return 0;
-}   
+}
