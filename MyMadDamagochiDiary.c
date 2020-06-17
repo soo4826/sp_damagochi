@@ -14,7 +14,6 @@ struct info{
     char* name;
     int exp;
     int hunger;
-    int time;//like day1, day2... day 10 -> finish delete needed
     int item;
     int money;
 };
