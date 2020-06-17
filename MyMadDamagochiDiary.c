@@ -80,25 +80,26 @@ void cui_status(Info *info){
     }
 
 
-int status(Info *info){
-    printf("=====DAMAGOCHI : %s 's STATUS======\n", info->name);
-    printf("EXP: [");
-    for(int i=0; i<info->exp/5; i++) printf("=");
+// int status(Info *info){
+//     printf("=====DAMAGOCHI : %s 's STATUS======\n", info->name);
+//     printf("EXP: [");
+//     for(int i=0; i<info->exp/5; i++) printf("=");
 
-    printf("]   100/%d \n", info->exp);
+//     printf("]   100/%d \n", info->exp);
 
-    printf("Hunger: [");
-    for(int i=0; i<info->hunger/5; i++) printf("=");
-    printf("]   100/%d \n", info->hunger);
+//     printf("Hunger: [");
+//     for(int i=0; i<info->hunger/5; i++) printf("=");
+//     printf("]   100/%d \n", info->hunger);
 
-    // printf("Damagochi name: %s\n",info->name );
-    // printf("Exp: %d\n",info->exp);
-    // printf("Hunger: %d\n",info->hunger );
-    printf("Money: %d\n",info->money );
-    printf("item: %d\n",info->item );
+//     // printf("Damagochi name: %s\n",info->name );
+//     // printf("Exp: %d\n",info->exp);
+//     // printf("Hunger: %d\n",info->hunger );
+//     printf("Money: %d\n",info->money );
+//     printf("item: %d\n",info->item );
     
-    return 0;
-}
+//     return 0;
+// }
+
 int clear_status(Info *info){
     info->exp=0;
     info->time=0;
@@ -108,7 +109,6 @@ int clear_status(Info *info){
     return 0;
 }
 
-void clear(){printf("\n\n\n\n\n\n\n\n\n\n");}
 //funcion Declaration
 int market(Info *info)
 {
@@ -433,38 +433,38 @@ int hunting(Info *info){
     //                       "┃  └─┘  ┃\n",                        
     //                       "┗━━━━━━━┛\n"};
 
-    if(hunger<31){
-                       printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
-                       printf("┃                                                                              ┃\n");
-                       printf("┃                       !! %-10s is starving !!                           ┃\n", info->name );
-        char *hunt_starving[100]  =  {
-                              "┃                                                                              ┃\n",
-                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                              "┃                                                                              ┃\n",
-                              "┃                                                                              ┃\n",
-                              "┃                                  ┌────────────────────────────────────────┐  ┃\n",
-                              "┃                                  │                                        │  ┃\n",
-                              "┃                                  │   I AM TOO HUNGRY TO HUNT! PLEASE EAT! │  ┃\n",
-                              "┃                                  /                                        │  ┃\n",
-                              "┃                 ┌───────┐       /─────────────────────────────────────────┘  ┃\n",
-                              "┃              \\  │ >< >< │  /                                                 ┃\n",
-                              "┃               \\ │       │ /                                                  ┃\n",
-                              "┃                \\│   ∏   │/                                                   ┃\n",
-                              "┃                 │       │                                                    ┃\n",
-                              "┃                 └───────┘                                                    ┃\n",
-                              "┃                   │   │                                                      ┃\n",
-                              "┃                   ┻   ┻                                                      ┃\n",
-                              "┃                                                                              ┃\n",
-                              "┃                                                                              ┃\n",
-                              "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
-                              "┃                                                                              ┃\n",
-                              "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
-        for(int i=0; i<20; i++) printf("%s", hunt_starving[i]);     
-        sleep(2);
+    // if(hunger<31){
+    //                    printf("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n");
+    //                    printf("┃                                                                              ┃\n");
+    //                    printf("┃                       !! %-10s is starving !!                           ┃\n", info->name );
+    //     char *hunt_starving[100]  =  {
+    //                           "┃                                                                              ┃\n",
+    //                           "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
+    //                           "┃                                                                              ┃\n",
+    //                           "┃                                                                              ┃\n",
+    //                           "┃                                  ┌────────────────────────────────────────┐  ┃\n",
+    //                           "┃                                  │                                        │  ┃\n",
+    //                           "┃                                  │   I AM TOO HUNGRY TO HUNT! PLEASE EAT! │  ┃\n",
+    //                           "┃                                  /                                        │  ┃\n",
+    //                           "┃                 ┌───────┐       /─────────────────────────────────────────┘  ┃\n",
+    //                           "┃              \\  │ >< >< │  /                                                 ┃\n",
+    //                           "┃               \\ │       │ /                                                  ┃\n",
+    //                           "┃                \\│   ∏   │/                                                   ┃\n",
+    //                           "┃                 │       │                                                    ┃\n",
+    //                           "┃                 └───────┘                                                    ┃\n",
+    //                           "┃                   │   │                                                      ┃\n",
+    //                           "┃                   ┻   ┻                                                      ┃\n",
+    //                           "┃                                                                              ┃\n",
+    //                           "┃                                                                              ┃\n",
+    //                           "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
+    //                           "┃                                                                              ┃\n",
+    //                           "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};
+    //     for(int i=0; i<20; i++) printf("%s", hunt_starving[i]);     
+    //     sleep(2);
        
 
-       return 0;
-    }//minju impl~
+    //    return 0;
+    // }//minju impl~
 
     for(int j=0; j<2; j++){
         for(int i=0; i<23; i++)
@@ -478,7 +478,7 @@ int hunting(Info *info){
         sleep(1);
     }
 
-    hunger=hunger-20;
+    hunger=hunger-10;
     //hunger =- 91; //to check code when hungry<10
     info->hunger = hunger;
     // printf("hunger : %d", hunger);
@@ -743,11 +743,8 @@ void starving(int fd_new){
 
 
 int gamemain(Info *info, int fd_new){
-    clear();
-
     int select =0;
     while(1){
-        clear();
         if((info->hunger) <= 0)
             starving(fd_new);
         else if((info->exp) >= 100)
@@ -758,8 +755,6 @@ int gamemain(Info *info, int fd_new){
         printf(">> ");
         scanf("%d", &select);
         int chk=0;
-        int tid;     //thread pid
-        clear();
         if(select == 1){//error detection hal geot
             chk=market(info);
             if(chk == -1){
@@ -1113,7 +1108,7 @@ void loadgame(Info *info){
         sleep(1);
         newgame(info);//fd open => new game cher rom dong jack
     }
-    printf("%s", datatemp);
+    // printf("%s", datatemp);
     sleep(2);
     info->name=strtok(datatemp, "/");
     info->exp = atoi(strtok(NULL, "/"));
