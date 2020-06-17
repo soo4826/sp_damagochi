@@ -78,27 +78,6 @@ void cui_status(Info *info){
             printf("%s", action_menu[i]);                        
     }
 
-
-// int status(Info *info){
-//     printf("=====DAMAGOCHI : %s 's STATUS======\n", info->name);
-//     printf("EXP: [");
-//     for(int i=0; i<info->exp/5; i++) printf("=");
-
-//     printf("]   100/%d \n", info->exp);
-
-//     printf("Hunger: [");
-//     for(int i=0; i<info->hunger/5; i++) printf("=");
-//     printf("]   100/%d \n", info->hunger);
-
-//     // printf("Damagochi name: %s\n",info->name );
-//     // printf("Exp: %d\n",info->exp);
-//     // printf("Hunger: %d\n",info->hunger );
-//     printf("Money: %d\n",info->money );
-//     printf("item: %d\n",info->item );
-    
-//     return 0;
-// }
-
 int clear_status(Info *info){
     info->exp=0;
     info->item=1;
@@ -254,9 +233,6 @@ int food(Info *info)
     main_full[21]=      "┃   Can't eat! I'm full!!                                                      ┃\n";
    //(윗화면 그래픽 1.튜나 2. 스팸 3.라면 4. 사료)
    char key;
-//    printf("1.TUNA(-$5,+5) 2.SPAM(-$5,+5) 3.Spaghetti(-$10,+10) 4.Feed(-$1,+1)\n\n");
-//    printf("What do you want to buy?\n");
-//    printf("press 'x' key to back to menu!!\n\n");
     for(int i=0; i<23; i++) printf("%s", main[i]);
     scanf(" %c",&key);   
     
@@ -462,7 +438,7 @@ int hunting(Info *info){
        
 
     //    return 0;
-    // }//minju impl~
+    // }//게임오버랑 조건 겹쳐서 사용 X
 
     for(int j=0; j<2; j++){
         for(int i=0; i<23; i++)
@@ -487,46 +463,7 @@ int hunting(Info *info){
     return 0;
 }
 
-// void gameExit(int fd_new){
-// 	close(fd_new);
-// 	printf("close files and game exit...\n");
-// 	sleep(2);
-// 	exit();
-// }
 
-// void savefile(Info *info, int fd_new) {        //save game, save file to directiory and return
-//     int a;
-//     clear();
-//     printf("1.only save.\n2.save and break.\n");
-//     printf("press 'x' key to back to menu!!\n\n");
-//     scanf("%d",&a);
-//     switch(a)
-//     {
-//       case 1:
-//         printf("savefile function!\n");
-//         char temp[50];
-//         sprintf(temp, "%s/%d/%d/%d",info->name, info->hunger, info->money, info->item);
-//         write(fd_new, temp, strlen(temp));
-//         sleep(1);
-//         break;
-//       case 2:
-//         printf("savefile function and exit game...\n");
-//         sprintf(temp, "%s/%d/%d/%d",info->name, info->hunger, info->money, info->item);
-//         write(fd_new, temp, strlen(temp));
-//         sleep(2);
-//         gameExit(fd_new);
-//         return 0;
-//       case 40:
-//       case 72:
-//          printf("Moving to menu...\n");
-//               sleep(2);   
-//          return 0;
-//       default:
-//          printf("Wrong choice!!\n");
-//          return -1;
-//    }
-    
-// }
 void gameExit(int fd_new){
 	close(fd_new);
 	printf("Thank you for playing..\n");
@@ -885,35 +822,6 @@ int newgame(Info *info){//new game, call gamemain
 
 }
 
-// int newgame(Info *info){//new game, call gamemain
-//     int fd_new=0;
-//     char savefile_path[50] = "./data/";
-//     char savefile_name[10];
-//     char damagochi_name[10];                 //character name
-//     clear();    
-//     // printf("new game test!!!!!!!!!!");
-//     printf("\n");
-    
-//     printf("Type username >>  ");
-//     scanf("%s", savefile_name);
-//     strncat(savefile_path, savefile_name, strlen(savefile_name));    //strncat()?
-//     strcat(savefile_path, ".txt");
-//     // printf("%s\n", savefile_path);
-//     // sleep(2);
-//     printf("Type your DAMAGOCHI NAME(under 10 character) >>  ");
-//     scanf("%s", damagochi_name);
-//     info->name=damagochi_name;
-//     // printf("%s\n", info->name);
-//     // sleep(2);               //debug
-//     clear_status(info);
-    
-//     fd_new=open(savefile_path, O_RDWR | O_CREAT, 00777);
-//     gamemain(info, fd_new);
-    
-// }
-
-
-
 void loadgame(Info *info){
     int cnt = 0;
 
@@ -1119,9 +1027,7 @@ void loadgame(Info *info){
     //loading the chosen file 
 
 }
-
-
-            //CUI MAIN STRUCT
+            //CUI MAIN STRUCT 
 
     // char *main[100]  =  {"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
     //                      "┃                                                                              ┃\n",
@@ -1196,7 +1102,7 @@ void cui_dama_start(){
                          "┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n",
                          "┃                                                                              ┃\n",
                          "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n"};                         
-    // char * dama_nomal[20]
+    // char * dama_nomal[20] 다마고치 기
     //                     ={
     //                       "┏━━━━━━━┓\n",
     //                       "┃  ■ ■  ┃\n",                           
@@ -1282,28 +1188,6 @@ void cui_dama_main(){
         for(int i=0; i<23; i++)
             printf("%s", main_menu[i] );
     }
-
-
-
-// int status(Info *info){
-//     printf("=====DAMAGOCHI : %s 's STATUS======\n", info->name);
-//     printf("EXP: [");
-//     for(int i=0; i<info->exp/5; i++) printf("=");
-
-//     printf("]   100/%d \n", info->exp);
-
-//     printf("Hunger: [");
-//     for(int i=0; i<info->hunger/5; i++) printf("=");
-//     printf("]   100/%d \n", info->hunger);
-
-//     // printf("Damagochi name: %s\n",info->name );
-//     // printf("Exp: %d\n",info->exp);
-//     // printf("Hunger: %d\n",info->hunger );
-//     printf("Money: %d\n",info->money );
-//     printf("item: %d\n",info->item );
-    
-//     return 0;
-// }
 
 int main(){  
     Info *info;
